@@ -1,0 +1,18 @@
+----------------------------------------------------------------
+Sat Aug 03 05:01:57 IST 2019:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-016c-54ac-f604-00008445c338 
+on database directory /home/system/SPARK/spark-2.3.0/core/target/JavaJdbcRDDSuiteDb with class loader sun.misc.Launcher$AppClassLoader@3d4eac69 
+Loaded from file:/home/system/.m2/repository/org/apache/derby/derby/10.12.1.1/derby-10.12.1.1.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_201-b09
+user.dir=/home/system/SPARK/spark-2.3.0/core
+os.name=Linux
+os.arch=amd64
+os.version=4.13.0-36-generic
+derby.system.home=null
+Warning: The database is booted with derby.system.durability=test. In this mode, it is possible that database may not be able to recover, committed transactions may be lost, database may be in an inconsistent state. Please use this mode only when these consequences are acceptable  
+
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Sat Aug 03 05:01:58 IST 2019:
+Shutting down instance a816c00e-016c-54ac-f604-00008445c338 on database directory /home/system/SPARK/spark-2.3.0/core/target/JavaJdbcRDDSuiteDb with class loader sun.misc.Launcher$AppClassLoader@3d4eac69 
