@@ -52,7 +52,7 @@ import org.apache.spark.shuffle._
  *    properties to allow serialized records to be re-ordered without requiring deserialization.
  *    See SPARK-4550, where this optimization was first proposed and implemented, for more details.
  *
- *  - It uses a specialized cache-efficient sorter ([[ShuffleExternalSorter]]) that sorts
+ *  - It uses a specialized cache-efficient sorter ([[ExternalSorterExternalSorter]]) that sorts
  *    arrays of compressed record pointers and partition ids. By using only 8 bytes of space per
  *    record in the sorting array, this fits more of the array into cache.
  *

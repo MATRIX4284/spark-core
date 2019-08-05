@@ -16,15 +16,15 @@
  */
 
 package org.apache.spark.storage
-
-import java.io.{BufferedOutputStream, File, FileOutputStream, OutputStream}
+import java.io._
 import java.nio.channels.FileChannel
-
+import alluxio.client.file.FileOutStream
 import org.apache.spark.executor.ShuffleWriteMetrics
 import org.apache.spark.internal.Logging
 import org.apache.spark.serializer.{SerializationStream, SerializerInstance, SerializerManager}
 import org.apache.spark.util.Utils
-
+import alluxio.AlluxioURI
+import alluxio.client.file.FileSystem
 /**
  * A class for writing JVM objects directly to a file on disk. This class allows data to be appended
  * to an existing block. For efficiency, it retains the underlying file channel across
@@ -74,6 +74,7 @@ private[spark] class DiskBlockObjectWriter(
   private var initialized = false
   private var streamOpen = false
   private var hasBeenClosed = false
+  val outStream: FileOutStream = null
 
   /**
    * Cursors used to represent positions in the file.
@@ -118,6 +119,15 @@ private[spark] class DiskBlockObjectWriter(
     }
 
     bs = serializerManager.wrapStream(blockId, mcs)
+
+
+
+    val fs = FileSystem.Factory.get
+    val listSize = fs.listStatus(new AlluxioURI("/")).size
+    if (listSize != 1) throw new RuntimeException("Expected 1 path to exist at the root, but found " + listSize)
+
+    val outStream = fs.createFile(new AlluxioURI("alluxio://GlusterFS2:19998/spark/"+file))
+
     objOut = serializerInstance.serializeStream(bs)
     streamOpen = true
     this
@@ -177,6 +187,10 @@ private[spark] class DiskBlockObjectWriter(
         // Force outstanding writes to disk and track how long it takes
         val start = System.nanoTime()
         fos.getFD.sync()
+
+        //TO BE EDITED BY KAUSTAV 04/08/2019 for Passing File_outPut_stream_to_Alluxio
+
+
         writeMetrics.incWriteTime(System.nanoTime() - start)
       }
 
@@ -250,6 +264,7 @@ private[spark] class DiskBlockObjectWriter(
     }
 
     bs.write(kvBytes, offs, len)
+    outStream.write(kvBytes, offs, len)
   }
 
   /**
@@ -278,5 +293,6 @@ private[spark] class DiskBlockObjectWriter(
   private[spark] override def flush() {
     objOut.flush()
     bs.flush()
+    outStream.flush()
   }
 }

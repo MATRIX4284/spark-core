@@ -40,7 +40,7 @@ private[spark] class SerializerManager(
   def this(defaultSerializer: Serializer, conf: SparkConf) = this(defaultSerializer, conf, None)
 
   private[this] val kryoSerializer = new KryoSerializer(conf)
-  private[this] val nativeSerializer = new NativeShuffleSerializer()
+  //private[this] val nativeSerializer = new NativeShuffleSerializer()
 
   def setDefaultClassLoader(classLoader: ClassLoader): Unit = {
     kryoSerializer.setDefaultClassLoader(classLoader)

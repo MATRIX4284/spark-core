@@ -401,6 +401,16 @@
       <artifactId>libfb303</artifactId>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>org.alluxio</groupId>
+      <artifactId>alluxio-core-client-fs</artifactId>
+      <version>1.8.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.alluxio</groupId>
+      <artifactId>alluxio-core-common</artifactId>
+      <version>1.8.1</version>
+    </dependency>
 
   </dependencies>
   <build>

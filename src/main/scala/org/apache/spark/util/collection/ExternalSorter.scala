@@ -107,7 +107,7 @@ private[spark] class ExternalSorter[K, V, C](
   private val diskBlockManager = blockManager.diskBlockManager
   private val serializerManager = SparkEnv.get.serializerManager
   //private val serInstance = serializer.newInstance()
-  private val serInstance = NativeShuffleSerializerInstance.getInstance()
+  private val serInstance = new NativeShuffleSerializer().newInstance()
   // Use getSizeAsKb (not bytes) to maintain backwards compatibility if no units are provided
   private val fileBufferSize = conf.getSizeAsKb("spark.shuffle.file.buffer", "32k").toInt * 1024
 
@@ -262,6 +262,7 @@ private[spark] class ExternalSorter[K, V, C](
   /**
    * Spill contents of in-memory iterator to a temporary file on disk.
    */
+
   private[this] def spillMemoryIteratorToDisk(inMemoryIterator: WritablePartitionedIterator)
       : SpilledFile = {
     // Because these files may be read during shuffle, their compression must be controlled by
